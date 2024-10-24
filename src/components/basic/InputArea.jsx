@@ -1,15 +1,17 @@
-function InputArea({ text, type }) {
+function InputArea({ text, type, onChange, value }) {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-sm" htmlFor={type}>
         {text}
       </label>
       <input
-        className="py-2 px-3 border border-black rounded-md"
+        onChange={onChange}
+        className="py-2 px-3 border border-black rounded-md w-full"
         type={type}
         name={type}
+        value={value}
         id={type}
-        placeholder={`Enter your ${type}`}
+        placeholder={`Enter your ${type === "text" ? "name" : type}`}
         required
       />
     </div>
