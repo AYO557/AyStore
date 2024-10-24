@@ -3,19 +3,20 @@ import InputArea from "../components/basic/InputArea";
 import RegisterButton from "../components/basic/RegisterButton";
 import RegTitle from "../components/basic/RegTitle";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   let api = "http://localhost:3000/api/users/login";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    toast("Validating account...");
     try {
       const response = await fetch(api, {
         method: "POST",
@@ -30,11 +31,10 @@ function Login() {
       const user = await response.json();
       console.log(user);
       localStorage.setItem("user", JSON.stringify(user));
-      setIsLoading(false);
+      toast("Authentication successful");
       navigate("/");
     } catch (error) {
       console.error(error);
-      setIsLoading(false);
     }
   };
 
@@ -63,11 +63,8 @@ function Login() {
               setPassword(e.target.value);
             }}
           />
-          <RegisterButton
-            isDisabled={isDisabled}
-            isLoading={isLoading}
-            text={"Sign In"}
-          />
+          <RegisterButton isDisabled={isDisabled} text={"Sign In"} />
+          <ToastContainer />
           <div className="text-sm flex justify-between font-bold">
             <span className="flex items-center gap-1">
               <input type="checkbox" id="remember" />

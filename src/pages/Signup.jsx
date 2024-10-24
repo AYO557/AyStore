@@ -3,6 +3,8 @@ import InputArea from "../components/basic/InputArea";
 import RegTitle from "../components/basic/RegTitle";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -10,14 +12,13 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   let api = "http://localhost:3000/api/users/signup";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    toast("Validating account...");
     try {
       const response = await fetch(api, {
         method: "POST",
@@ -30,13 +31,11 @@ function Signup() {
         throw new Error("Failed to register");
       }
       const user = await response.json();
-      console.log(user);
       localStorage.setItem("user", JSON.stringify(user));
-      setIsLoading(false);
+      toast("Authentication successful");
       navigate("/");
     } catch (error) {
       console.error(error);
-      setIsLoading(false);
     }
   };
 
@@ -84,11 +83,8 @@ function Signup() {
               setConfirm(e.target.value);
             }}
           />
-          <RegisterButton
-            isLoading={isLoading}
-            isDisabled={isDisabled}
-            text={"Sign Up"}
-          />
+          <RegisterButton isDisabled={isDisabled} text={"Sign Up"} />
+          <ToastContainer />
         </form>
         <div className="text-sm flex justify-between font-bold">
           <span>Already have an account?</span>

@@ -1,4 +1,4 @@
-function RegisterButton({ text, isDisabled, isLoading }) {
+function RegisterButton({ text, isDisabled }) {
   return (
     <button
       className={` w-full py-3 font-bold rounded-md ${
@@ -9,7 +9,7 @@ function RegisterButton({ text, isDisabled, isLoading }) {
       type="submit"
       disabled={isDisabled ? true : false}
     >
-      {isLoading ? "loading..." : text}
+      {text}
     </button>
   );
 }

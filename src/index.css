@@ -12,4 +12,19 @@
       background-repeat: no-repeat;
     }
   }
+
+  .nav-link div:last-child {
+    height: 2px;
+    background-color: blue;
+    width: 0;
+  }
+
+  .nav-link:hover div:last-child {
+    transition: 1s;
+    width: 100%;
+  }
+
+  .search:hover input {
+    width: 100px;
+  }
 }
