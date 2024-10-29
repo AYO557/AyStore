@@ -24,7 +24,15 @@
     width: 100%;
   }
 
+  .border-line {
+    border-bottom: 2px solid blue;
+  }
+
+  .search:hover {
+    width: 200px;
+  }
+
   .search:hover input {
-    width: 100px;
+    width: 150px;
   }
 }

@@ -6,7 +6,7 @@ function InputArea({ text, type, onChange, value }) {
       </label>
       <input
         onChange={onChange}
-        className="py-2 px-3 border border-black rounded-md w-full"
+        className="py-2 px-3 text-black border border-black rounded-md w-full"
         type={type}
         name={type}
         value={value}

@@ -4,6 +4,7 @@ import RegTitle from "../components/basic/RegTitle";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import useAuth from "../hooks/useAuth";
 import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
@@ -12,30 +13,21 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const { fetchUser } = useAuth();
   const navigate = useNavigate();
-
-  let api = "http://localhost:3000/api/users/signup";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     toast("Validating account...");
     try {
-      const response = await fetch(api, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to register");
+      const error = await fetchUser(email, password, "signup", name);
+      if (error) {
+        throw new Error(error);
       }
-      const user = await response.json();
-      localStorage.setItem("user", JSON.stringify(user));
-      toast("Authentication successful");
+      toast.success("Account created");
       navigate("/");
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      toast.error(err.message);
     }
   };
 

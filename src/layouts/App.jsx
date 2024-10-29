@@ -1,11 +1,24 @@
-import { Outlet } from "react-router-dom";
-import NavBox from "../components/mono/NavBox";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import NavBox, { MobileNavBox } from "../components/mono/NavBox";
 
 function App() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    setUser(null);
+    let getUser = JSON.parse(localStorage.getItem("user"));
+    if (!getUser) {
+      setUser(null);
+    } else {
+      setUser(getUser);
+    }
+  }, []);
   return (
     <div>
-      <NavBox />
-      <div className="text-center font-bold bg-blue-600 text-white h-[90vh] text-4xl">
+      <NavBox user={user} />
+      <MobileNavBox />
+      <div className="text-white">
         <Outlet />
       </div>
     </div>
