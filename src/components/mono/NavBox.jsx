@@ -84,7 +84,11 @@ function NavBox({ user }) {
           </div>
         )}
         {user && (
-          <NavLink to="/" className="text-blue-500 hover:text-blue-200">
+          <NavLink
+            to="/"
+            className="text-blue-500 hover:text-blue-200"
+            title="Cart"
+          >
             <FaCartShopping size={25} />
           </NavLink>
         )}
@@ -127,13 +131,13 @@ export function MobileNavBox() {
           </NavLink>
         </div>
       </nav>
-      <div className="sm:hidden flex items-center gap-8 font-semibold p-3 bg-blue-600 relative">
+      <div className="sm:hidden flex items-center gap-8 font-semibold p-3 bg-blue-600 relative h-[10vh]">
         <span onClick={() => setToggleNavbar(!toggleNavbar)}>
           <FaBars size={25} color="white" />
         </span>
         <menu
-          className={`absolute top-full z-50 text-white bg-blue-600 left-0 h-[80vh] text-3xl flex flex-col transition-all duration-700 ${
-            toggleNavbar ? "w-[100vw] flex" : "w-0 hidden"
+          className={`absolute top-full z-50 text-white bg-blue-600 left-0  text-3xl flex flex-col transition-all duration-700 ${
+            toggleNavbar ? "w-[100vw] h-[80vh] flex" : "w-0 h-0"
           }`}
         >
           <NavLink

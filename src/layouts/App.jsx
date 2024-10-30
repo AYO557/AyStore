@@ -1,9 +1,8 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavBox, { MobileNavBox } from "../components/mono/NavBox";
 
 function App() {
-  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   useEffect(() => {
     setUser(null);
