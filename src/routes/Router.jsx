@@ -6,6 +6,9 @@ import Signup from "../pages/Signup.jsx";
 import Home from "../pages/Home.jsx";
 import Shop from "../pages/Shop.jsx";
 import Help from "../pages/Help.jsx";
+import Products from "../pages/Products.jsx";
+import UserContextProvider from "../contexts/UserContext.jsx";
+import CartContextProvider from "../contexts/CartContext.jsx";
 
 function Router() {
   const routes = createBrowserRouter([
@@ -25,15 +28,27 @@ function Router() {
     },
     {
       path: "/",
-      element: <App />,
+      element: (
+        <CartContextProvider>
+          <UserContextProvider>
+            <App />
+          </UserContextProvider>
+        </CartContextProvider>
+      ),
       children: [
         {
           index: true,
           element: <Home />,
         },
         {
-          path: "/shop",
+          path: "shop",
           element: <Shop />,
+          children: [
+            {
+              path: ":id",
+              element: <Products />,
+            },
+          ],
         },
         {
           path: "help",

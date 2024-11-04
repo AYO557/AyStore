@@ -3,9 +3,14 @@ import { FaBars, FaCartShopping } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/icons/ay-logo.svg";
 import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { CartContext } from "../../contexts/CartContext";
 
-function NavBox({ user }) {
+function NavBox() {
   const [isFocused, setIsFocused] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const { cart } = useContext(CartContext);
 
   return (
     <nav className="shadow-lg lg:px-[140px] sm:px-10 sm:flex justify-between items-center h-[10vh] hidden">
@@ -84,13 +89,18 @@ function NavBox({ user }) {
           </div>
         )}
         {user && (
-          <NavLink
-            to="/"
-            className="text-blue-500 hover:text-blue-200"
-            title="Cart"
-          >
-            <FaCartShopping size={25} />
-          </NavLink>
+          <>
+            <NavLink
+              to="/"
+              className="text-blue-500 hover:text-blue-200 relative"
+              title="Cart"
+            >
+              <FaCartShopping size={25} />
+              <span className="px-1 bg-red-300 text-white font-bold rounded-full text-[10px] absolute -top-1 -right-1">
+                {cart.length}
+              </span>
+            </NavLink>
+          </>
         )}
         <span
           className="text-blue-500 bg-blue-100 py-2 pl-2 pr-5 rounded-[1rem] flex items-center gap-1 search"
@@ -106,6 +116,18 @@ function NavBox({ user }) {
             }`}
           />
         </span>
+        {user && (
+          <Link
+            onClick={() => {
+              localStorage.removeItem("user");
+              setUser(null);
+            }}
+            to="auth/"
+            className="bg-blue-500 px-4 py-1 font-bold text-white rounded-md border border-blue-500 hover:border hover:border-blue-500 hover:text-blue-500 hover:bg-transparent"
+          >
+            Log Out
+          </Link>
+        )}
       </div>
     </nav>
   );
